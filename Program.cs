@@ -11,6 +11,7 @@ namespace BlogsConsole
         private static NLog.Logger logger = NLogBuilder.ConfigureNLog(Directory.GetCurrentDirectory() + "\\nlog.config").GetCurrentClassLogger();
         static void Main(string[] args)
         {
+            
             logger.Info("Program started");
             string choice;
             string choice2;
@@ -64,9 +65,9 @@ namespace BlogsConsole
                             Console.Write("Enter new Post Content: ");
                             var content = Console.ReadLine();
 
-                            var post = new Post { Title = title, Content=content };
+                            var post = new Post {BlogId = item.BlogId, Title = title, Content=content };
 
-                            //db = new BloggingContext();
+                            db = new BloggingContext();
                             db.AddPost(post);
                             logger.Info("Post added - {title}", title);
                         }

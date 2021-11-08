@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
+
 namespace BlogsConsole
 {
     public class BloggingContext : DbContext
@@ -10,6 +11,7 @@ namespace BlogsConsole
 
         public void AddBlog(Blog blog)
         {
+            //base.Configuration.LazyLoadingEnabled = false; 
             this.Blogs.Add(blog);
             this.SaveChanges();
         }
