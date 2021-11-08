@@ -13,6 +13,7 @@ namespace BlogsConsole
         {
             logger.Info("Program started");
             string choice;
+            string choice2;
             var db= new BloggingContext();;
 
              try
@@ -37,16 +38,41 @@ namespace BlogsConsole
                 }
                 }
                 else if(choice=="2")
-                {Console.Write("Enter a name for a new Blog: ");
+                {
+                Console.Write("Enter a name for a new Blog: ");
                 var name = Console.ReadLine();
 
                 var blog = new Blog { Name = name };
 
                  db = new BloggingContext();
                 db.AddBlog(blog);
-                logger.Info("Blog added - {name}", name);}
+                logger.Info("Blog added - {name}", name);
+                }
                 else if(choice=="3")
-                {}
+                {
+                Console.WriteLine("Write the blog you are posting to.");
+                choice2 = Console.ReadLine();
+
+                var query = db.Blogs.OrderBy(b => b.Name);
+
+                foreach (var item in query)
+                    {
+                        //Console.WriteLine(item.Name);
+                        if(item.Name == choice2){
+                            Console.Write("Enter new Post Title: ");
+                            var title = Console.ReadLine();
+                            Console.Write("Enter new Post Content: ");
+                            var content = Console.ReadLine();
+
+                            var post = new Post { Title = title, Content=content };
+
+                            //db = new BloggingContext();
+                            db.AddPost(post);
+                            logger.Info("Post added - {title}", title);
+                        }
+                    }
+
+                }
                 else if(choice=="4")
                 {}
 
