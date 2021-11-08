@@ -77,6 +77,7 @@ namespace BlogsConsole
                 }
                 else if(choice=="4")
                 {
+                    int count=0;
                 Console.WriteLine("Write the blog you want.");
                 choice3 = Console.ReadLine();
 
@@ -92,9 +93,11 @@ namespace BlogsConsole
                             foreach (var item2 in query2)
                                 {
                                 Console.WriteLine(item.Name+"/"+item2.Title+"/"+item2.Content);
+                                count++;
                                 }
                         }
                     }
+                    Console.WriteLine($"Number of posts:{count}");
                 }
                 
                 } while (choice == "1" || choice == "2" || choice =="3" || choice=="4");
