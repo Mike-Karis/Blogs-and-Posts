@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
+using System;
 using NLog.Web;
 using System.IO;
 using System.Linq;
@@ -13,8 +15,7 @@ namespace BlogsConsole
         {
             
             logger.Info("Program started");
-            string choice;
-            string choice2;
+            string choice,choice2, choice3;
             var db= new BloggingContext();;
 
              try
@@ -30,7 +31,7 @@ namespace BlogsConsole
 
                 if (choice == "1")
                 {
-                    var query = db.Blogs.OrderBy(b => b.Name);
+                var query = db.Blogs.OrderBy(b => b.Name);
 
                 Console.WriteLine("All blogs in the database:");
                 foreach (var item in query)
@@ -75,27 +76,28 @@ namespace BlogsConsole
 
                 }
                 else if(choice=="4")
-                {}
+                {
+                Console.WriteLine("Write the blog you want.");
+                choice3 = Console.ReadLine();
 
-               // // Create and save a new Blog
-                // Console.Write("Enter a name for a new Blog: ");
-                // var name = Console.ReadLine();
+                var query = db.Blogs.OrderBy(b => b.Name);
 
-                // var blog = new Blog { Name = name };
 
-                // var db = new BloggingContext();
-                // db.AddBlog(blog);
-                // logger.Info("Blog added - {name}", name);
+                foreach (var item in query)
+                    {
+                        if(item.Name == choice3){
 
-                //// Display all Blogs from the database
-                // var query = db.Blogs.OrderBy(b => b.Name);
+                            var query2 = db.Posts.OrderBy(b => b.Title);
 
-                // Console.WriteLine("All blogs in the database:");
-                // foreach (var item in query)
-                // {
-                //     Console.WriteLine(item.Name);
-                // }
-                } while (choice == "1" || choice == "2" || choice =="3");
+                            foreach (var item2 in query2)
+                                {
+                                Console.WriteLine(item.Name+"/"+item2.Title+"/"+item2.Content);
+                                }
+                        }
+                    }
+                }
+                
+                } while (choice == "1" || choice == "2" || choice =="3" || choice=="4");
             }
             catch (Exception ex)
             {
